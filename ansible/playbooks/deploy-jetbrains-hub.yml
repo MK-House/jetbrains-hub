@@ -199,6 +199,11 @@
         name: "mkhouse-jetbrainshub-data"
         path: "/mkh/srv/mkhouse/jetbrainshub-data"
 
+    - name: "Ensure mkhouse-jetbrainshub-conf Docker volume meets expectations"
+      mkh_ensure_docker_volume:
+        name: "mkhouse-jetbrainshub-conf"
+        path: "/mkh/srv/mkhouse/jetbrainshub-conf"
+
     - name: "Pull Docker Compose services"
       command: |
         docker compose pull

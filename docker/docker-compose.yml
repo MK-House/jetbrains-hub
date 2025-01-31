@@ -17,8 +17,8 @@ services:
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "mkhouse-jetbrains-hub-data:/opt/hub/data"
-      - "mkhouse-jetbrains-hub-conf:/opt/hub/conf"
+      - "mkhouse-jetbrainshub-data:/opt/hub/data"
+      - "mkhouse-jetbrainshub-conf:/opt/hub/conf"
     networks:
       mkhouse-jetbrains-net:
       mkhouse-vpc-net:
@@ -30,7 +30,7 @@ networks:
     external: true
 
 volumes:
-  mkhouse-jetbrains-data:
+  mkhouse-jetbrainshub-data:
     external: true
-  mkhouse-jetbrains-conf:
+  mkhouse-jetbrainshub-conf:
     external: true
