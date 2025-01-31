@@ -197,12 +197,20 @@
     - name: "Ensure mkhouse-jetbrainshub-data Docker volume meets expectations"
       mkh_ensure_docker_volume:
         name: "mkhouse-jetbrainshub-data"
-        path: "/mkh/srv/mkhouse/jetbrainshub-data"
+        device:
+          path: "/mkh/srv/mkhouse/jetbrainshub-data"
+          permissions: '0755'
+          puid: '1000'
+          pgid: '1000'
 
     - name: "Ensure mkhouse-jetbrainshub-conf Docker volume meets expectations"
       mkh_ensure_docker_volume:
         name: "mkhouse-jetbrainshub-conf"
-        path: "/mkh/srv/mkhouse/jetbrainshub-conf"
+        device:
+          path: "/mkh/srv/mkhouse/jetbrainshub-conf"
+          permissions: '0755'
+          puid: '1000'
+          pgid: '1000'
 
     - name: "Pull Docker Compose services"
       command: |
