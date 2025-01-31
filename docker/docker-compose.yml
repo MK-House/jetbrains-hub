@@ -3,7 +3,7 @@ name: mkhouse-jetbrains-hub
 services:
 
   mkhouse-jetbrains-hub:
-    image: "jetbrains/hub"
+    image: "jetbrains/hub:2024.3.57595"
     container_name: "mkhouse-jetbrains-hub"
     hostname: "mkhouse-jetbrains-hub"
     restart: "unless-stopped"
