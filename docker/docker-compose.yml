@@ -1,19 +1,21 @@
 name: mkhouse-jetbrains-hub
 
-###x-common-props: &common-props
-###  restart: "unless-stopped"
-###  dns:
-###    - 1.1.1.1
-###    - 4.4.4.4
-###  environment:
-###    PUID: "1000"
-###    PGID: "1000"
-###    TZ: "America/Sao_Paulo"
-###  volumes:
-###    - "/etc/localtime:/etc/localtime:ro"
-###    - "/var/run/docker.sock:/var/run/docker.sock:ro"
-###  networks:
-###    stack-net:
+x-common-props: &common-props
+  restart: "unless-stopped"
+  dns:
+    - 1.1.1.1
+    - 4.4.4.4
+  environment:
+    PUID: "1000"
+    PGID: "1000"
+    TZ: "America/Sao_Paulo"
+  volumes:
+    - "/etc/localtime:/etc/localtime:ro"
+    - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  extra_hosts:
+      - host.docker.internal:host-gateway
+  networks:
+    stack-net:
 
 services:
 
@@ -40,17 +42,8 @@ services:
     image: "jetbrains/hub:2024.3.57595"
     container_name: "mkhouse-jetbrains-hub"
     hostname: "mkhouse-jetbrains-hub"
-    restart: "unless-stopped"
-    dns:
-      - "1.1.1.1"
-      - "4.4.4.4"
-    environment:
-      PUID: "1000"
-      PGID: "1000"
-      TZ: "America/Sao_Paulo"
+    <<: *common-props
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "mkhouse-jetbrainshub-data:/opt/hub/data"
       - "mkhouse-jetbrainshub-conf:/opt/hub/conf"
     networks:
