@@ -37,6 +37,7 @@ jobs:
             -e JETBRAINSHUB_PROJECT=${JETBRAINSHUB_PROJECT} \
             -e CF_ACCOUNT_ID=${CF_ACCOUNT_ID} \
             -e CF_TUNNEL_API_TOKEN=${CF_TUNNEL_API_TOKEN} \
+            -e CF_ZONE_ID=${CF_ZONE_ID} \
             -e CF_TUNNEL_NAME=${CF_TUNNEL_NAME} \
             -e CF_SERVICE=${CF_SERVICE} \
             -e CF_HOSTNAME=${CF_HOSTNAME}

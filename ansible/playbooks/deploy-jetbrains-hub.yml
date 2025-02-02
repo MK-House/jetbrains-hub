@@ -242,3 +242,4 @@
         tunnel_name: "{{ CF_TUNNEL_NAME }}"
         private_service: "{{ CF_SERVICE }}"
         public_hostname: "{{ CF_HOSTNAME }}"
+        zone_id: "{{ CF_ZONE_ID }}"
