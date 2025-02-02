@@ -19,6 +19,8 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "mkhouse-jetbrainshub-data:/opt/hub/data"
       - "mkhouse-jetbrainshub-conf:/opt/hub/conf"
+    ports:
+      - "18080:8080"
     networks:
       mkhouse-jetbrains-net:
       mkhouse-vpc-net:
