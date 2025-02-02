@@ -186,13 +186,12 @@
 
   tasks:
 
-    - name: "Ensure mkhouse-vpc-net Docker network exists"
+    - name: "Ensure Docker networks exist"
       mkh_ensure_docker_network:
-        name: "mkhouse-vpc-net"
-
-    - name: "Ensure mkhouse-jetbrains-net Docker network exists"
-      mkh_ensure_docker_network:
-        name: "mkhouse-jetbrains-net"
+        networks:
+          - name: "mkhouse-vpc-net"
+          - name: "mkhouse-jetbrains-net"
+          - name: "mkhouse-db-net"
 
     - name: "Ensure mkhouse-jetbrainshub-data Docker volume meets expectations"
       mkh_ensure_docker_volume:
