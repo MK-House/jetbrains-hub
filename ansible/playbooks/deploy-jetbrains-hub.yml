@@ -215,17 +215,23 @@
               puid: '1000'
               pgid: '1000'
 
-    - name: Copy hub-config to mkhouse-jetbrainshub-conf volume
-      command: >
-        docker run --rm -v mkhouse-jetbrainshub-conf:/mnt
-        -v {{ playbook_dir }}/hub-config:/hub-config
-        alpine sh -c "cp /hub-config /mnt/"
-
     - name: "Pull Docker Compose services"
       command: |
         docker compose pull
       args:
         chdir: "{{ JETBRAINSHUB_PROJECT }}"
+
+    - name: "Stop Docker Compose services"
+      command: |
+        docker compose down
+      args:
+        chdir: "{{ JETBRAINSHUB_PROJECT }}"
+
+    - name: Copy hub-config to mkhouse-jetbrainshub-conf volume
+      command: >
+        docker run --rm -v mkhouse-jetbrainshub-conf:/mnt
+        -v {{ playbook_dir }}/hub-config:/hub-config
+        alpine sh -c "cp /hub-config /mnt/"
 
     - name: "Start Docker Compose services"
       command: |
