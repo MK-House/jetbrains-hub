@@ -191,10 +191,6 @@
         networks:
           - name: "mkhouse-vpc-net"
           - name: "mkhouse-jetbrains-net"
-
-    - name: "Ensure Docker networks exist"
-      mkh_ensure_docker_network:
-        networks:
           - name: "mkhouse-db-net"
 
     - name: "Ensure Docker volumes meet expectations"
