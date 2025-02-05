@@ -246,7 +246,7 @@
           -v mkhouse-jetbrainshub-conf:/target \
           -v {{ playbook_dir }}/../docker:/source \
           alpine \
-          sh -c "ls /source"
+          sh -c "cp /source/hub-config.properties /target/"
 
     - name: "Start Docker Compose services"
       command: |
