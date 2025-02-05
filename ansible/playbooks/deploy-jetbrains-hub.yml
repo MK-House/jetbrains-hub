@@ -244,7 +244,7 @@
       command: |
         docker run --rm  \
           -v mkhouse-jetbrainshub-conf:/target \
-          -v ../docker:/source \
+          -v {{ playbook_dir }}/../docker:/source \
           alpine \
           sh -c "cp /source/hub-config.properties /target/"
 
