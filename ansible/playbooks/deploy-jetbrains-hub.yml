@@ -244,9 +244,9 @@
       command: |
         docker run --rm  \
           -v mkhouse-jetbrainshub-conf:/target \
-          -v ../docker/hub-config.properties:/source/hub-config.properties \
+          -v ../docker:/source \
           alpine \
-          sh -c "cp /source/* /target/"
+          sh -c "cp /source/hub-config.properties /target/"
 
     - name: "Start Docker Compose services"
       command: |
