@@ -215,18 +215,6 @@
               puid: '1000'
               pgid: '1000'
 
-    - name: "Pull Docker Compose services"
-      command: |
-        docker compose pull
-      args:
-        chdir: "{{ JETBRAINSHUB_PROJECT }}"
-
-    - name: "Stop Docker Compose services"
-      command: |
-        docker compose down
-      args:
-        chdir: "{{ JETBRAINSHUB_PROJECT }}"
-
     - name: "Remove existing .env file if it exists"
       file:
         path: "{{ JETBRAINSHUB_PROJECT }}/.env"
@@ -239,6 +227,18 @@
           POSTGRES_DB={{ JBHUB_DATABASE_NAME }}
           POSTGRES_USER={{ JBHUB_DATABASE_USER }}
           POSTGRES_PASSWORD={{ JBHUB_DATABASE_PASSWORD }}
+
+    - name: "Pull Docker Compose services"
+      command: |
+        docker compose pull
+      args:
+        chdir: "{{ JETBRAINSHUB_PROJECT }}"
+
+    - name: "Stop Docker Compose services"
+      command: |
+        docker compose down
+      args:
+        chdir: "{{ JETBRAINSHUB_PROJECT }}"
 
     - name: Copy hub-config to mkhouse-jetbrainshub-conf volume
       command: >
