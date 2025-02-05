@@ -240,11 +240,16 @@
       args:
         chdir: "{{ JETBRAINSHUB_PROJECT }}"
 
+    - name: Get absolute path of docker directory
+      stat:
+        path: "{{ playbook_dir }}/../docker"
+      register: docker_dir
+
     - name: Copy hub-config to mkhouse-jetbrainshub-conf volume
       command: |
         docker run --rm  \
           -v mkhouse-jetbrainshub-conf:/target \
-          -v {{ playbook_dir }}/../docker:/source \
+          -v {{ docker_dir.stat.abs_path }}:/source \
           alpine \
           sh -c "cp /source/hub-config.properties /target/"
 
