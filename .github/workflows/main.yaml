@@ -23,6 +23,49 @@ jobs:
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v2"
+      - name: "Install gettext (envsubst)"
+        run: |
+          if command -v apt-get >/dev/null; then
+            sudo apt-get install -y gettext
+          elif command -v yum >/dev/null; then
+            sudo yum install -y gettext
+          elif command -v dnf >/dev/null; then
+            sudo dnf install -y gettext
+          elif command -v pacman >/dev/null; then
+            sudo pacman -Sy --noconfirm gettext
+          elif command -v zypper >/dev/null; then
+            sudo zypper install -y gettext
+          else
+            echo "Unsupported package manager. Please install gettext manually."
+            exit 1
+          fi
+      - name: "Substitute environment variables in hub-config.properties"
+        env:
+          JBHUB_SERVER_URL: "${{ vars.JBHUB_SERVER_URL }}"
+          JBHUB_SERVER_BASE_URL: "${{ vars.JBHUB_SERVER_BASE_URL }}"
+          JBHUB_SERVER_NAME: "${{ vars.JBHUB_SERVER_NAME }}"
+          JBHUB_SERVER_LISTEN_PORT: "${{ vars.JBHUB_SERVER_LISTEN_PORT }}"
+          JBHUB_JABBER_HOST: "${{ vars.JBHUB_JABBER_HOST }}"
+          JBHUB_JABBER_PORT: "${{ vars.JBHUB_JABBER_PORT }}"
+          JBHUB_JABBER_LOGIN: "${{ vars.JBHUB_JABBER_LOGIN }}"
+          JBHUB_JABBER_PASSWORD: "${{ secrets.JBHUB_JABBER_PASSWORD }}"
+          JBHUB_JABBER_BOT_NICK: "${{ vars.JBHUB_JABBER_BOT_NICK }}"
+          JBHUB_SMTP_HOST: "${{ vars.JBHUB_SMTP_HOST }}"
+          JBHUB_SMTP_PORT: "${{ vars.JBHUB_SMTP_PORT }}"
+          JBHUB_SMTP_LOGIN: "${{ vars.JBHUB_SMTP_LOGIN }}"
+          JBHUB_SMTP_PASSWORD: "${{ secrets.JBHUB_SMTP_PASSWORD }}"
+          JBHUB_SMTP_SECURE: "${{ vars.JBHUB_SMTP_SECURE }}"
+          JBHUB_SMTP_FROM: "${{ vars.JBHUB_SMTP_FROM }}"
+          JBHUB_SMTP_FROM_NAME: "${{ vars.JBHUB_SMTP_FROM_NAME }}"
+          JBHUB_DATABASE_TYPE: "${{ vars.JBHUB_DATABASE_TYPE }}"
+          JBHUB_DATABASE_HOST: "${{ vars.JBHUB_DATABASE_HOST }}"
+          JBHUB_DATABASE_PORT: "${{ vars.JBHUB_DATABASE_PORT }}"
+          JBHUB_DATABASE_NAME: "${{ vars.JBHUB_DATABASE_NAME }}"
+          JBHUB_DATABASE_USER: "${{ vars.JBHUB_DATABASE_USER }}"
+          JBHUB_DATABASE_PASSWORD: "${{ secrets.JBHUB_DATABASE_PASSWORD }}"
+        run: |
+          envsubst < ./docker/hub-config.properties > ./docker/hub-config.properties.tmp
+          mv -f ./docker/hub-config.properties.tmp ./docker/hub-config.properties
       - name: "Copy project to dropfolder"
         run: |
           sudo rm -rf ${ANSIBLE_PROJECT}/_dropfolder/jetbrains-hub/*
