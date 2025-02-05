@@ -14,12 +14,35 @@ jobs:
     env:
       ANSIBLE_PROJECT: "${{ vars.ANSIBLE_PROJECT }}"
       JETBRAINSHUB_PROJECT: "${{ vars.JETBRAINSHUB_PROJECT }}"
+      JBHUB_SERVER_URL: "${{ vars.JBHUB_SERVER_URL }}"
+      JBHUB_SERVER_BASE_URL: "${{ vars.JBHUB_SERVER_BASE_URL }}"
+      JBHUB_SERVER_NAME: "${{ vars.JBHUB_SERVER_NAME }}"
+      JBHUB_SERVER_LISTEN_PORT: "${{ vars.JBHUB_SERVER_LISTEN_PORT }}"
+      JBHUB_JABBER_HOST: "${{ vars.JBHUB_JABBER_HOST }}"
+      JBHUB_JABBER_PORT: "${{ vars.JBHUB_JABBER_PORT }}"
+      JBHUB_JABBER_LOGIN: "${{ vars.JBHUB_JABBER_LOGIN }}"
+      JBHUB_JABBER_PASSWORD: "${{ secrets.JBHUB_JABBER_PASSWORD }}"
+      JBHUB_JABBER_BOT_NICK: "${{ vars.JBHUB_JABBER_BOT_NICK }}"
+      JBHUB_SMTP_HOST: "${{ vars.JBHUB_SMTP_HOST }}"
+      JBHUB_SMTP_PORT: "${{ vars.JBHUB_SMTP_PORT }}"
+      JBHUB_SMTP_LOGIN: "${{ vars.JBHUB_SMTP_LOGIN }}"
+      JBHUB_SMTP_PASSWORD: "${{ secrets.JBHUB_SMTP_PASSWORD }}"
+      JBHUB_SMTP_SECURE: "${{ vars.JBHUB_SMTP_SECURE }}"
+      JBHUB_SMTP_FROM: "${{ vars.JBHUB_SMTP_FROM }}"
+      JBHUB_SMTP_FROM_NAME: "${{ vars.JBHUB_SMTP_FROM_NAME }}"
+      JBHUB_DATABASE_TYPE: "${{ vars.JBHUB_DATABASE_TYPE }}"
+      JBHUB_DATABASE_HOST: "${{ vars.JBHUB_DATABASE_HOST }}"
+      JBHUB_DATABASE_PORT: "${{ vars.JBHUB_DATABASE_PORT }}"
+      JBHUB_DATABASE_NAME: "${{ vars.JBHUB_DATABASE_NAME }}"
+      JBHUB_DATABASE_USER: "${{ vars.JBHUB_DATABASE_USER }}"
+      JBHUB_DATABASE_PASSWORD: "${{ secrets.JBHUB_DATABASE_PASSWORD }}"
       CF_ACCOUNT_ID: "${{ secrets.CF_ACCOUNT_ID }}"
       CF_TUNNEL_API_TOKEN: "${{ secrets.CF_TUNNEL_API_TOKEN }}"
       CF_TUNNEL_NAME: "${{ vars.CF_TUNNEL_NAME }}"
       CF_ZONE_ID: "${{ secrets.CF_ZONE_ID }}"
       CF_SERVICE: "${{ vars.CF_SERVICE }}"
       CF_HOSTNAME: "${{ vars.CF_HOSTNAME }}"
+
     steps:
       - name: "Checkout repository"
         uses: "actions/checkout@v2"
@@ -40,29 +63,6 @@ jobs:
             exit 1
           fi
       - name: "Substitute environment variables in hub-config.properties"
-        env:
-          JBHUB_SERVER_URL: "${{ vars.JBHUB_SERVER_URL }}"
-          JBHUB_SERVER_BASE_URL: "${{ vars.JBHUB_SERVER_BASE_URL }}"
-          JBHUB_SERVER_NAME: "${{ vars.JBHUB_SERVER_NAME }}"
-          JBHUB_SERVER_LISTEN_PORT: "${{ vars.JBHUB_SERVER_LISTEN_PORT }}"
-          JBHUB_JABBER_HOST: "${{ vars.JBHUB_JABBER_HOST }}"
-          JBHUB_JABBER_PORT: "${{ vars.JBHUB_JABBER_PORT }}"
-          JBHUB_JABBER_LOGIN: "${{ vars.JBHUB_JABBER_LOGIN }}"
-          JBHUB_JABBER_PASSWORD: "${{ secrets.JBHUB_JABBER_PASSWORD }}"
-          JBHUB_JABBER_BOT_NICK: "${{ vars.JBHUB_JABBER_BOT_NICK }}"
-          JBHUB_SMTP_HOST: "${{ vars.JBHUB_SMTP_HOST }}"
-          JBHUB_SMTP_PORT: "${{ vars.JBHUB_SMTP_PORT }}"
-          JBHUB_SMTP_LOGIN: "${{ vars.JBHUB_SMTP_LOGIN }}"
-          JBHUB_SMTP_PASSWORD: "${{ secrets.JBHUB_SMTP_PASSWORD }}"
-          JBHUB_SMTP_SECURE: "${{ vars.JBHUB_SMTP_SECURE }}"
-          JBHUB_SMTP_FROM: "${{ vars.JBHUB_SMTP_FROM }}"
-          JBHUB_SMTP_FROM_NAME: "${{ vars.JBHUB_SMTP_FROM_NAME }}"
-          JBHUB_DATABASE_TYPE: "${{ vars.JBHUB_DATABASE_TYPE }}"
-          JBHUB_DATABASE_HOST: "${{ vars.JBHUB_DATABASE_HOST }}"
-          JBHUB_DATABASE_PORT: "${{ vars.JBHUB_DATABASE_PORT }}"
-          JBHUB_DATABASE_NAME: "${{ vars.JBHUB_DATABASE_NAME }}"
-          JBHUB_DATABASE_USER: "${{ vars.JBHUB_DATABASE_USER }}"
-          JBHUB_DATABASE_PASSWORD: "${{ secrets.JBHUB_DATABASE_PASSWORD }}"
         run: |
           envsubst < ./docker/hub-config.properties > ./docker/hub-config.properties.tmp
           mv -f ./docker/hub-config.properties.tmp ./docker/hub-config.properties
@@ -84,4 +84,28 @@ jobs:
             -e CF_ZONE_ID=${CF_ZONE_ID} \
             -e CF_TUNNEL_NAME=${CF_TUNNEL_NAME} \
             -e CF_SERVICE=${CF_SERVICE} \
-            -e CF_HOSTNAME=${CF_HOSTNAME}
+            -e CF_HOSTNAME=${CF_HOSTNAME} \
+            -e JBHUB_SERVER_BASE_URL=${JBHUB_SERVER_BASE_URL} \
+            -e JBHUB_SERVER_NAME=${JBHUB_SERVER_NAME} \
+            -e JBHUB_SERVER_LISTEN_PORT=${JBHUB_SERVER_LISTEN_PORT} \
+            -e JBHUB_JABBER_HOST=${JBHUB_JABBER_HOST} \
+            -e JBHUB_JABBER_PORT=${JBHUB_JABBER_PORT} \
+            -e JBHUB_JABBER_LOGIN=${JBHUB_JABBER_LOGIN} \
+            -e JBHUB_JABBER_PASSWORD=${JBHUB_JABBER_PASSWORD} \
+            -e JBHUB_JABBER_BOT_NICK=${JBHUB_JABBER_BOT_NICK} \
+            -e JBHUB_SMTP_HOST=${JBHUB_SMTP_HOST} \
+            -e JBHUB_SMTP_PORT=${JBHUB_SMTP_PORT} \
+            -e JBHUB_SMTP_LOGIN=${JBHUB_SMTP_LOGIN} \
+            -e JBHUB_SMTP_PASSWORD=${JBHUB_SMTP_PASSWORD} \
+            -e JBHUB_SMTP_SECURE=${JBHUB_SMTP_SECURE} \
+            -e JBHUB_SMTP_FROM=${JBHUB_SMTP_FROM} \
+            -e JBHUB_SMTP_FROM_NAME=${JBHUB_SMTP_FROM_NAME} \
+            -e JBHUB_DATABASE_TYPE=${JBHUB_DATABASE_TYPE} \
+            -e JBHUB_DATABASE_HOST=${JBHUB_DATABASE_HOST} \
+            -e JBHUB_DATABASE_PORT=${JBHUB_DATABASE_PORT} \
+            -e JBHUB_DATABASE_NAME=${JBHUB_DATABASE_NAME} \
+            -e JBHUB_DATABASE_USER=${JBHUB_DATABASE_USER} \
+            -e JBHUB_DATABASE_PASSWORD=${JBHUB_DATABASE_PASSWORD} \
+            -e POSTGRES_DB=${JBHUB_DATABASE_HOST} \
+            -e POSTGRES_USER=${JBHUB_DATABASE_USER} \
+            -e POSTGRES_PASSWORD=${JBHUB_DATABASE_PASSWORD}
