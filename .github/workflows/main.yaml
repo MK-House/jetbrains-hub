@@ -76,6 +76,7 @@ jobs:
         run: |
           cd ${ANSIBLE_PROJECT}
           ansible-playbook ${GITHUB_WORKSPACE}/ansible/playbooks/deploy-jetbrains-hub.yml \
+            -vvv \
             -i ./inventory/hosts.ini \
             -e ANSIBLE_PROJECT="${ANSIBLE_PROJECT}" \
             -e JETBRAINSHUB_PROJECT="${JETBRAINSHUB_PROJECT}" \
