@@ -227,6 +227,19 @@
       args:
         chdir: "{{ JETBRAINSHUB_PROJECT }}"
 
+    - name: "Remove existing .env file if it exists"
+      file:
+        path: "{{ JETBRAINSHUB_PROJECT }}/.env"
+        state: "absent"
+
+    - name: "Generate .env file with token"
+      copy:
+        dest: "{{ JETBRAINSHUB_PROJECT }}/.env"
+        content: |
+          POSTGRES_DB={{ JBHUB_DATABASE_NAME }}
+          POSTGRES_USER={{ JBHUB_DATABASE_USER }}
+          POSTGRES_PASSWORD={{ JBHUB_DATABASE_PASSWORD }}
+
     - name: Copy hub-config to mkhouse-jetbrainshub-conf volume
       command: >
         docker run --rm -v mkhouse-jetbrainshub-conf:/mnt
