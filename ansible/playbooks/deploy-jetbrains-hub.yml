@@ -241,10 +241,12 @@
         chdir: "{{ JETBRAINSHUB_PROJECT }}"
 
     - name: Copy hub-config to mkhouse-jetbrainshub-conf volume
-      command: >
-        docker run --rm -v mkhouse-jetbrainshub-conf:/mnt
-        -v {{ playbook_dir }}/hub-config:/hub-config
-        alpine sh -c "cp /hub-config /mnt/"
+      command: |
+        docker run --rm  \
+          -v mkhouse-jetbrainshub-conf:/target \
+          -v ../docker/hub-config.properties:/source/hub-config.properties \
+          alpine \
+          sh -c "cp /source/* /target/"
 
     - name: "Start Docker Compose services"
       command: |
