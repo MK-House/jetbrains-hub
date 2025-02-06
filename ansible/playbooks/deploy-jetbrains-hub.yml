@@ -240,13 +240,17 @@
       args:
         chdir: "{{ JETBRAINSHUB_PROJECT }}"
 
+    - name: Set realpath for docker directory
+      set_fact:
+        docker_realpath: "{{ lookup('pipe', 'realpath ' + playbook_dir + '/../docker') }}"
+
     - name: Copy hub-config to mkhouse-jetbrainshub-conf volume
-      command: |
-        docker run --rm  \
-          -v mkhouse-jetbrainshub-conf:/target \
-          -v $(realpath {{ playbook_dir }}/../docker):/source \
-          alpine \
-          sh -c "cp /source/hub-config.properties /target/"
+      command: >
+        docker run --rm
+        -v mkhouse-jetbrainshub-conf:/target
+        -v {{ docker_realpath }}:/source
+        alpine
+        sh -c "cp /source/hub-config.properties /target/"
 
     - name: "Start Docker Compose services"
       command: |
