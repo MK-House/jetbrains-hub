@@ -244,6 +244,26 @@
       set_fact:
         docker_realpath: "{{ lookup('pipe', 'realpath ' + playbook_dir + '/../docker') }}"
 
+    - name: Debug docker_realpath variable
+      debug:
+        msg: "docker_realpath: {{ docker_realpath }}"
+
+    - name: List contents of docker_realpath directory
+      command: ls -l {{ docker_realpath }}
+      register: docker_realpath_contents
+
+    - name: Debug contents of docker_realpath directory
+      debug:
+        var: docker_realpath_contents.stdout
+
+    - name: List contents of playbook_dir/../docker directory
+      command: ls -l {{ playbook_dir }}/../docker
+      register: playbook_docker_contents
+
+    - name: Debug contents of playbook_dir/../docker directory
+      debug:
+        var: playbook_docker_contents.stdout
+
     - name: Copy hub-config to mkhouse-jetbrainshub-conf volume
       command: >
         docker run --rm
