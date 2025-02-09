@@ -21,25 +21,25 @@ services:
 
   mkhouse-jetbrains-hub-db:
     <<: *common-props
-    image: 'postgres:16-alpine'
-    container_name: 'mkhouse-jetbrains-hub-db'
-    hostname: 'mkhouse-jetbrains-hub-db'
+    image: "postgres:16-alpine"
+    container_name: "mkhouse-jetbrains-hub-db"
+    hostname: "mkhouse-jetbrains-hub-db"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d planka"]
-      interval: '10s'
-      timeout: '5s'
-      retries: '5'
+      interval: "10s"
+      timeout: "5s"
+      retries: "5"
     environment:
-      POSTGRES_DB: '${POSTGRES_DB}'
-      POSTGRES_USER: '${POSTGRES_USER}'
-      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD}'
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
     volumes:
       - mkhouse-jetbrainshub-db-data:/var/lib/postgresql/data
     networks:
       mkhouse-db-net:
 
   mkhouse-jetbrains-hub:
-    image: "jetbrains/hub:2024.3.57595"
+    image:  jetbrains/hub:2024.3.57595"
     container_name: "mkhouse-jetbrains-hub"
     hostname: "mkhouse-jetbrains-hub"
     <<: *common-props
