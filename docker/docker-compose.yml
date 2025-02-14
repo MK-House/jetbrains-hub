@@ -36,6 +36,7 @@ services:
     volumes:
       - mkhouse-jetbrainshub-db-data:/var/lib/postgresql/data
     networks:
+      stack-net:
       mkhouse-db-net:
 
   mkhouse-jetbrains-hub:
@@ -47,6 +48,7 @@ services:
       - "mkhouse-jetbrainshub-data:/opt/hub/data"
       - "mkhouse-jetbrainshub-conf:/opt/hub/conf"
     networks:
+      stack-net:
       mkhouse-jetbrains-net:
       mkhouse-vpc-net:
 
